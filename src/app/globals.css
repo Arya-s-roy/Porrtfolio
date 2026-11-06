@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050507;
+  --foreground: #f3f3f6;
+  --muted: #9a9aa8;
+  --line: rgba(255, 255, 255, 0.08);
+  --accent: #7c8cff;
+  --accent-2: #4de4ff;
+  --glass: rgba(12, 12, 16, 0.55);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-syne);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: auto;
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 55%, black);
+  color: white;
+}
+
+.display {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  letter-spacing: -0.04em;
+}
+
+main {
+  position: relative;
+  z-index: 10;
+  transform: translateZ(0);
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.atmosphere {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(900px 500px at 70% 10%, rgba(124, 140, 255, 0.16), transparent 55%),
+    radial-gradient(700px 480px at 10% 80%, rgba(77, 228, 255, 0.08), transparent 50%),
+    linear-gradient(180deg, #050507 0%, #09090d 40%, #050507 100%);
+}
+
+.hairline {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
